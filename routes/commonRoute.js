@@ -30,7 +30,7 @@ router.put('/supplier/:productid',isAuthenticate,supplierController.updateProduc
 router.get('/supplier',isAuthenticate,supplierController.getAllProducts);
 
 /* customer route */
-router.post('/customer',isAuthenticate,customerController.addItem);
+router.post('/cart',isAuthenticate,customerController.addItem);
 router.post('/helpdesk',isAuthenticate,customerController.raiseTicket);
 
 /* helpdesk route */

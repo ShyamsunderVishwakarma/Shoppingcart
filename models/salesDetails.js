@@ -14,12 +14,32 @@ autoIncrement.initialize(mongoose.connection);
 var salesDetailsSchema = new Schema({
 	transactionid : {type : Number,unique : true},
 	userid : {type : String, required : true},
-	productid : {type : String, requried  :true},
-	quantity : {type : Number, requried : true},
-	price : {type : Number, required : true},
+	items :[
+			{
+				productid : {type : String, requried  :true},
+				quantity : {type : Number, requried : true,min : 1},
+				price : {type : Number, required : true},
+			}
+		   ],
 	createdby : {type : String, required : true},
 	createddate : {type : Date,default : Date.now}
 });
+
+// Check for Zero or Empty item
+salesDetailsSchema.path('items').validate(function(items){
+
+	if(!items)
+	{
+		return false;
+	}
+	else if(items.length === 0)
+	{
+		return false;
+	}
+
+	return true;
+},'Atleast one item requried to add to cart!!!')
+
 
 //assign field to autoincrement
 salesDetailsSchema.plugin(autoIncrement.plugin, {
